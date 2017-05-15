@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use TCG\Voyager\Facades\Voyager;
 
 class AddVoyagerUserFields extends Migration
 {
@@ -9,7 +10,8 @@ class AddVoyagerUserFields extends Migration
      */
     public function up()
     {
-        Schema::table('users', function ($table) {
+        $table_name = Voyager::model('User')->getTable();
+        Schema::table($table_name, function ($table) {
             $table->string('avatar')->nullable()->after('email');
             $table->integer('role_id')->nullable()->after('id');
         });
@@ -20,7 +22,8 @@ class AddVoyagerUserFields extends Migration
      */
     public function down()
     {
-        Schema::table('users', function ($table) {
+        $table_name = Voyager::model('User')->getTable();
+        Schema::table($table_name, function ($table) {
             $table->dropColumn('avatar');
             $table->dropColumn('role_id');
         });
